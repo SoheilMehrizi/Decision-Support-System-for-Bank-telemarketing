@@ -175,3 +175,5 @@ cython_debug/
 
 # virtual environment files
 .env
+
+.trunk
