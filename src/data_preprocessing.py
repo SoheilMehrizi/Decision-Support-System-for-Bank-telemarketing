@@ -10,7 +10,6 @@ from .feature_engineering import DynamicNumToCatTransformer
 import warnings
 
 def create_preprocessor(num_features:list, cat_features:list):
-    # Numerical pipeline: normalization (mean=0, std=1)
     
     num_pipeline = Pipeline([
         ('scaler', StandardScaler(with_mean=True, with_std=True))
@@ -36,20 +35,17 @@ class DataFrameOutputTransformer(BaseEstimator, TransformerMixin):
 
     def fit(self, X, y=None):
         try:
-            # Get feature names from the ColumnTransformer
             self.feature_names_ = self.col_transformer.get_feature_names_out()
         except AttributeError:
-            # Fallback to generic feature names if unavailable
             self.feature_names_ = [f"feature_{i}" for i in range(X.shape[1])]
         return self
 
     def transform(self, X, y=None):
-        # Transform the data
+
         transformed = X
-        # Dynamically adjust feature names if there is a mismatch
         if len(self.feature_names_) != transformed.shape[1]:
             self.feature_names_ = [f"feature_{i}" for i in range(transformed.shape[1])]
-        # Return a DataFrame with the correct index and column names
+
         if self.index is not None and len(self.index) == transformed.shape[0]:
             return pd.DataFrame(transformed, columns=self.feature_names_, index=self.index)
         else:
@@ -71,12 +67,13 @@ def process_dataset(
     return_dataframe=True
 ):
     df_ = df_.copy()
+    df_ = df_.drop(df_[(df_['balance']<=0) & (df_['y']=='yes')].index)
 
     if target_column and target_column in df_.columns.tolist():
         df_[target_column] = df_[target_column].map({'yes': 1, 'no': 0})
         y = df_[target_column]
         X = df_.drop(columns=[target_column])
-    # else:
+    else:
         X = df_.copy()
         y = None
 
