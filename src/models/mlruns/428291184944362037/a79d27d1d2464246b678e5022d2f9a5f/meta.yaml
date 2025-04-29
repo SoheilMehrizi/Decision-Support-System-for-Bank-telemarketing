@@ -1,0 +1,16 @@
+artifact_uri: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/428291184944362037/a79d27d1d2464246b678e5022d2f9a5f/artifacts
+end_time: 1745954512257
+entry_point_name: ''
+experiment_id: '428291184944362037'
+lifecycle_stage: active
+run_id: a79d27d1d2464246b678e5022d2f9a5f
+run_name: salty-mole-974
+run_uuid: a79d27d1d2464246b678e5022d2f9a5f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1745954500020
+status: 3
+tags: []
+user_id: mehri
