@@ -5,14 +5,15 @@ from typing import Any
 from scipy.stats import randint, loguniform
 from scipy.stats._distn_infrastructure import rv_frozen
 
-# TODO: Fix the Addressing
+config_file_path = "Project/configs/models_config.json"
+
 class ConfigRepository:
     """
     Manages storing and retrieving model configs in a JSON file.
     Thread-safe for concurrent reads/writes.
     """
 
-    def __init__(self, config_path: str = "models_config.json"):
+    def __init__(self, config_path: str = config_file_path):
         """Initialize repository with optional custom config file path."""
         self._path = Path(config_path)
         self._lock = threading.Lock()
