@@ -19,23 +19,19 @@ def build_model(hp, input_dim: int, mlp_config: dict) -> tf.keras.Model:
     """
     model = tf.keras.Sequential()
 
-    # Select hidden layer configuration index
     num_configs = len(mlp_config['hidden_layers'])
     idx = hp.Choice('hidden_layers_idx', values=list(range(num_configs)))
     hidden_layers = mlp_config['hidden_layers'][idx]
 
-    # Add layers based on selected configuration
+    
     for units in hidden_layers:
         model.add(layers.Dense(units, activation='relu', input_shape=(input_dim,)))
-        # Dropout from config
         dropout_rate = hp.Choice('dropout_rate', values=mlp_config['dropout_rate'])
         if dropout_rate > 0.0:
             model.add(layers.Dropout(dropout_rate))
 
-    # Output layer
     model.add(layers.Dense(1, activation='sigmoid'))
 
-    # Learning rate from config
     learning_rate = hp.Choice('learning_rate', values=mlp_config['learning_rate'])
     model.compile(
         optimizer=optimizers.Adam(learning_rate),
@@ -51,11 +47,10 @@ def train_mlp(X_train, y_train,
     """
     Train an MLP with hyperparameter tuning using configs and log the final model.
     """
-    # Load MLP config
+
     repo_cfg = ConfigRepository(config_path="../configs/models_config.json")
     mlp_config = repo_cfg.get_config('mlp')
 
-    # Prepare data
     X = X_train.values
     y = y_train.values
     input_dim = X.shape[1]
@@ -101,14 +96,11 @@ def train_mlp(X_train, y_train,
     auc = roc_auc_score(y_val, y_val_pred)
 
     
-    print(60*"=")
-
     best_auc = auc
     best_hps = tuner.get_best_hyperparameters(num_trials=1)[0]
 
     print(f"\nBest Candidate's AUC: {auc:.4f}")
 
-    # Retrain best model on full data
     final_model = build_model(best_hps, input_dim, mlp_config)
     final_model.fit(
         X, y,
@@ -117,7 +109,6 @@ def train_mlp(X_train, y_train,
         verbose=2
     )
 
-    # Log and register model
     repo_mdl = ModelRepository(experiment_name=mlp_config.get('experiment_name', 'MLP_Models'))
     run_id = repo_mdl.log_model(
         final_model,
