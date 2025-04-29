@@ -44,7 +44,7 @@ def train_random_forest(X_train, y_train, cv_splits= 5, random_state=42):
     metrics = {"cv_roc_auc": halving_search.best_score_}
 
     repo = ModelRepository(experiment_name="Bank_Marketing_Models")
-    run_id = repo.log_model(best_model, model_name="Decision_Tree_model", params=best_params, metrics=metrics)
-    registered_model = repo.register_model(run_id, model_name="Decision_Tree_model", registered_name="BankMarketing_DT")
+    run_id = repo.log_model(best_model, model_name="random_forest_model", params=best_params, metrics=metrics)
+    registered_model = repo.register_model(run_id, model_name="random_forest_model", registered_name="BankMarketing_DT")
 
     return best_model, halving_search.best_params_, metrics
