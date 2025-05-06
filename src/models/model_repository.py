@@ -41,4 +41,4 @@ class ModelRepository:
     def list_registered_models(self):
 
         client = mlflow.tracking.MlflowClient()
-        return client.list_registered_models()
+        return client.search_registered_models()
