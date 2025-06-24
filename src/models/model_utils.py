@@ -12,20 +12,20 @@ def calculate_alift(y_true, y_proba, num_bins=10):
     df = df.sort_values('y_proba', ascending=False)
     df['decile'] = pd.qcut(df['y_proba'], q=num_bins, labels=False)
     lift_table = df.groupby('decile')['y_true'].mean().reset_index(name='rate')
-    baseline = df['y_true'].max()
+    baseline = df['y_true'].mean()
+
     lift_table['lift'] = lift_table['rate'] / baseline
     alift = lift_table['lift'].mean()
     return lift_table, alift
 
 
-def plot_alift(model_name ,lift_table, ax=None):
+def plot_alift(model_name ,lift_table, ax=None, label = 'Model Lift'):
 
     if ax is None:
         ax = plt.gca()
     
     lift_table = lift_table.sort_values('decile')
-
-    ax.plot(lift_table['decile'] + 1, lift_table['lift'], marker='o', linestyle='-', color='blue', label='Model Lift')
+    ax.plot(lift_table['decile'] + 1, lift_table['lift'], marker='o', linestyle='-', color='blue', label=label)
 
     ax.axhline(y=1, color='gray', linestyle='--', label='Baseline (Lift = 1)')
 
@@ -43,9 +43,13 @@ def plot_roc_curve(y_true, y_proba, label=None, ax=None):
     
     if ax is None:
         ax = plt.gca()
-    
+    ax.set_title(f'{label}_ROC_AUC')
+
     ax.plot(fpr, tpr, label=f"{label} (AUC={auc_val:.3f})")
-    
+    ax.legend()
+    ax.set_xlabel('False Positive Rate')
+    ax.set_ylabel('True Positive Rate')
+
     return auc_val
 
 # TODO: Refactor, to make it more dynamic.
