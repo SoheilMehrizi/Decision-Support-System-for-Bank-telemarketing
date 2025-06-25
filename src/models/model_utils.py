@@ -71,14 +71,20 @@ def plot_learning_curve(estimator, X, y, cv, scoring='roc_auc'):
 
 
 def evaluate_model_on_test(estimator, estimator_name, X_test, y_test, ax_roc=None, ax_lift=None):
-
+    y_test = y_test.copy()
+    y_test = y_test.to_frame()
+    
+    y_test['y'] = y_test['y'].map({'yes': 1, 'no': 0})
+    
     if estimator_name == "NeuralNetwork":
         y_test_proba = estimator.predict(X_test)[:, 0]
         print("y_test_proba:",y_test_proba.shape)
     else:
         y_test_proba = estimator.predict_proba(X_test)[:, 1]
-    lift_table, alift = calculate_alift(y_test, y_test_proba)
-    test_auc_val = plot_roc_curve(y_test, y_test_proba, label=estimator_name, ax=ax_roc)
-    plot_alift(model_name = estimator_name, lift_table = lift_table, ax = ax_lift)
+    lift_table, alift = calculate_alift(y_test['y'], y_test_proba)
+
+    if (ax_lift is not None) and (ax_roc is not None):
+        test_auc_val = plot_roc_curve(y_test, y_test_proba, label=estimator_name, ax=ax_roc)
+        plot_alift(model_name = estimator_name, lift_table = lift_table, ax = ax_lift)
 
     return test_auc_val, alift
