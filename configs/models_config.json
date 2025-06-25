@@ -1,20 +1,20 @@
 {
     "logistic_regression": {
-        "C": {
+        "clf__C": {
             "type": "loguniform",
             "params": [
                 0.0001,
                 10000.0
             ]
         },
-        "penalty": [
+        "clf__penalty": [
             "l1",
             "l2"
         ],
-        "solver": [
+        "clf__solver": [
             "liblinear"
         ],
-        "max_iter": [
+        "clf__max_iter": [
             100,
             200,
             500
