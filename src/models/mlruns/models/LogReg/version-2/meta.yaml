@@ -1,0 +1,16 @@
+aliases: []
+creation_timestamp: 1750783640931
+current_stage: None
+description: null
+last_updated_timestamp: 1750783640931
+name: LogReg
+run_id: d2a19d89dcd241b78b7d816132fd8fcc
+run_link: null
+source: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision Support
+  System/Project/notebooks/../src/models/mlruns/428291184944362037/d2a19d89dcd241b78b7d816132fd8fcc/artifacts/logistic_regression_model
+status: READY
+status_message: null
+storage_location: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/428291184944362037/d2a19d89dcd241b78b7d816132fd8fcc/artifacts/logistic_regression_model
+user_id: null
+version: 2

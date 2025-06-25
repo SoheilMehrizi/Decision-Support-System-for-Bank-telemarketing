@@ -1,0 +1,16 @@
+artifact_uri: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/428291184944362037/77221df156294df29841b59c9d14f799/artifacts
+end_time: 1750881516141
+entry_point_name: ''
+experiment_id: '428291184944362037'
+lifecycle_stage: active
+run_id: 77221df156294df29841b59c9d14f799
+run_name: bouncy-turtle-279
+run_uuid: 77221df156294df29841b59c9d14f799
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750881489934
+status: 3
+tags: []
+user_id: mehri

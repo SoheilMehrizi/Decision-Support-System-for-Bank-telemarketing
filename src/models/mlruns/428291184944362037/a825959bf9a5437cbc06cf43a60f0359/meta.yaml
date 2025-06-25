@@ -1,0 +1,16 @@
+artifact_uri: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/428291184944362037/a825959bf9a5437cbc06cf43a60f0359/artifacts
+end_time: 1750873972621
+entry_point_name: ''
+experiment_id: '428291184944362037'
+lifecycle_stage: active
+run_id: a825959bf9a5437cbc06cf43a60f0359
+run_name: loud-carp-117
+run_uuid: a825959bf9a5437cbc06cf43a60f0359
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750873958713
+status: 3
+tags: []
+user_id: mehri
