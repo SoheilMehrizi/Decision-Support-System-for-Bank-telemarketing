@@ -26,13 +26,14 @@ MODEL_REGISTRY: Dict[str, ModelFactory] = {
 }
 
 
-def train_compare_models(
+def train_log_models(
     X_train, y_train, X_test, y_test,
-    models: Dict[str, ModelFactory] = MODEL_REGISTRY,
-    n_rows: int = 2, n_cols: int = 2,
+    preprocessing_pipeline: object,
+    models_name: list=None,
+    visualize: bool = True
 ) -> Dict[str, Any]:
     """
-    Train multiple classifiers, plot ROC & lift charts, and return performance metrics.
+    Train multiple classifiers
 
     Parameters
     ----------
@@ -40,10 +41,8 @@ def train_compare_models(
         Training features and labels.
     X_test, y_test
         Test features and labels.
-    models
-        Mapping from model name to a trainer function that returns (estimator, best_params, auc_train).
-    n_rows, n_cols
-        Grid layout for subplots.
+    models_name
+        a list of models name which want to train.
 
     Returns
     -------
@@ -52,37 +51,45 @@ def train_compare_models(
     """
     results: Dict[str, Any] = {}
 
-    fig_roc, axes_roc   = plt.subplots(n_rows, n_cols, figsize=(10, 8))
-    fig_lift, axes_lift = plt.subplots(n_rows, n_cols, figsize=(10, 8))
-    axes_roc   = axes_roc.ravel()
-    axes_lift  = axes_lift.ravel()
+    ax_lift=None
+    ax_roc=None
 
+    if models_name==None:
+        models = MODEL_REGISTRY
+    else:
+        filterd_data = {k: MODEL_REGISTRY[k] for k in models_name if k in MODEL_REGISTRY}
+        models = filterd_data
+    models_num = len(models)
+    if visualize:
+        fig_, axes_   = plt.subplots(models_num, 2, figsize=(10, 8), constrained_layout=True)
+        axes = axes_.ravel()
+    
     for idx, (name, trainer) in enumerate(tqdm(models.items(), desc="Models", unit="model")):
-        logging.info(f"Training {name} ({idx+1}/{len(models)})…")
-        model, best_params, auc_train = trainer(X_train, y_train)
+        logging.info(f"Training {name} ({idx+1}/{models_num})…")
+        best_estimator_reference_pipeline, best_params, auc_train = trainer(X_train, y_train, preprocessing_pipeline)
 
         logging.info(f"Evaluating {name} on test set…")
+        
+        if visualize:
+            ax_lift=axes[idx]
+            ax_roc=axes[idx+models_num]
+
         auc_test, alift = evaluate_model_on_test(
-            model,
-            name,
-            X_test,
-            y_test,
-            ax_roc=axes_roc[idx],
-            ax_lift=axes_lift[idx]
+            estimator=best_estimator_reference_pipeline,
+            estimator_name=name,
+            X_test = X_test,
+            y_test = y_test,
+            ax_lift=ax_lift,
+            ax_roc=ax_roc
         )
 
         results[name] = {
-            "model":     model,
+            "model":     best_estimator_reference_pipeline,
             "params":    best_params,
             "auc_train": auc_train,
             "auc_test":  auc_test,
             "alift":     alift,
         }
-
-    
-    for fig in (fig_roc, fig_lift):
-        fig.tight_layout()
-    plt.show()
 
     logging.info("=== Test set performance summary ===")
     for name, res in results.items():
@@ -92,5 +99,6 @@ def train_compare_models(
             res["auc_test"],
             res["alift"]
         )
-
+    if visualize:
+        plt.show()
     return results
