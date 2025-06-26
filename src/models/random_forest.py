@@ -5,13 +5,15 @@ from sklearn.metrics import roc_auc_score
 
 from scipy.stats import randint
 
-from imblearn.pipeline import Pipeline
+from imblearn.pipeline import Pipeline as ImbPipeline
 from imblearn.over_sampling import RandomOverSampler
 
 from src.models.model_repository import ModelRepository
 from configs.config_repository import ConfigRepository
+from sklearn.preprocessing import FunctionTransformer
 
-def train_random_forest(X_train, y_train, cv_splits= 5, random_state=42):
+def train_random_forest(X_train, y_train, preprocessing_pipeline,
+                         cv_splits= 5, random_state=42):
 
     repo = ConfigRepository(config_path="../configs/models_config.json")
     param_dist = repo.get_config('random_forest')
@@ -19,9 +21,12 @@ def train_random_forest(X_train, y_train, cv_splits= 5, random_state=42):
     cv = StratifiedKFold(n_splits=cv_splits, shuffle=True, random_state=random_state)
     rf_model = RandomForestClassifier(random_state=random_state)
     
-    pipeline = Pipeline([
-    ("smote", RandomOverSampler(random_state=42)),
-    ("clf", rf_model)
+
+
+    pipeline = ImbPipeline([
+       ('preprocess', FunctionTransformer(preprocessing_pipeline.fit_transform, validate=False)),
+       ("smote", RandomOverSampler(random_state=42)),
+       ("clf", rf_model) 
     ])
     
     halving_search = HalvingRandomSearchCV(
@@ -40,11 +45,17 @@ def train_random_forest(X_train, y_train, cv_splits= 5, random_state=42):
     best_model = halving_search.best_estimator_
     best_params = halving_search.best_params_
 
-    train_auc = roc_auc_score(y_train, best_model.predict_proba(X_train)[:, 1])
     metrics = {"cv_roc_auc": halving_search.best_score_}
+    
+    trained_clf = best_model.named_steps['clf']
 
+    refernce_pipeline = ImbPipeline([
+       ('preprocess', FunctionTransformer(preprocessing_pipeline.fit_transform, validate=False)),
+       ("clf", trained_clf) 
+    ])
+    
     repo = ModelRepository(experiment_name="Bank_Marketing_Models")
-    run_id = repo.log_model(best_model, model_name="random_forest_model", params=best_params, metrics=metrics)
+    run_id = repo.log_model(refernce_pipeline, model_name="random_forest_model", params=best_params, metrics=metrics)
     registered_model = repo.register_model(run_id, model_name="random_forest_model", registered_name="BankMarketing_DT")
 
-    return best_model, halving_search.best_params_, metrics
+    return refernce_pipeline, halving_search.best_params_, metrics
