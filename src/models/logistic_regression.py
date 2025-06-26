@@ -58,11 +58,11 @@ def train_logistic_regression(X_train, y_train, preprocessing_pipeline,
 
     refernce_pipeline = ImbPipeline([
        ('preprocess', FunctionTransformer(preprocessing_pipeline.fit_transform, validate=False)),
-       ("clf", lr_model) 
+       ("clf", trained_clf) 
     ])
 
     repo = ModelRepository(experiment_name="Bank_Marketing_Models")
     run_id = repo.log_model(refernce_pipeline, model_name="logistic_regression_model", params=best_params, metrics=metrics)
     registered_model = repo.register_model(run_id, model_name="logistic_regression_model", registered_name="LogReg")
     
-    return best_model, best_params, metrics
+    return refernce_pipeline, best_params, metrics
