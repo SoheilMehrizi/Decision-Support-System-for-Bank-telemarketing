@@ -84,7 +84,7 @@ def patch_dependencies(monkeypatch):
 
 
 def test_train_svm_returns_expected():
-    from src.models.svm import train_svm
+    from src.models.svc import train_svm
 
     # Dummy training data
     X_train = np.array([[0], [1], [2], [3]])

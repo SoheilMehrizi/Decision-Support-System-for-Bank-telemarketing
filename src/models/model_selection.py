@@ -6,7 +6,7 @@ import logging
 
 from src.models.logistic_regression import train_logistic_regression
 from src.models.random_forest import train_random_forest
-from src.models.svm import train_svm
+from src.models.svc import train_svc
 from src.models.neural_network import train_mlp
 from src.models.model_utils import evaluate_model_on_test
 
@@ -21,7 +21,7 @@ ModelFactory = Callable[..., Tuple[Any, Dict[str, Any], float]]
 MODEL_REGISTRY: Dict[str, ModelFactory] = {
     "LogisticRegression": train_logistic_regression,
     "RandomForest":      train_random_forest,
-    "SVC":               train_svm,
+    "SVC":               train_svc,
     "NeuralNetwork":     train_mlp,
 }
 
