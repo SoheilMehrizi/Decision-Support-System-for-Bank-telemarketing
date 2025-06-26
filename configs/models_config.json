@@ -54,7 +54,7 @@
             "balanced_subsample"
         ]
     },
-    "svm": {
+    "svc": {
         "clf__C": {
             "type": "loguniform",
             "params": [
