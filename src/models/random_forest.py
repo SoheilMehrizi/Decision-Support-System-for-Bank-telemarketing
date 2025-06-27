@@ -50,7 +50,7 @@ def train_random_forest(X_train, y_train, preprocessing_pipeline,
     trained_clf = best_model.named_steps['clf']
 
     refernce_pipeline = ImbPipeline([
-       ('preprocess', FunctionTransformer(preprocessing_pipeline.fit_transform, validate=False)),
+       ('preprocess', FunctionTransformer(preprocessing_pipeline.transform, validate=False)),
        ("clf", trained_clf) 
     ])
     
