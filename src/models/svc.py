@@ -9,7 +9,7 @@ from configs.config_repository import ConfigRepository
 from src.models.model_repository import ModelRepository
 from sklearn.preprocessing import FunctionTransformer
 
-def train_svm(X_train, y_train, preprocessing_pipeline,
+def train_svc(X_train, y_train, preprocessing_pipeline,
                cv_splits=5, random_state=42):
 
     config_repo = ConfigRepository(config_path="../configs/models_config.json")
@@ -47,7 +47,7 @@ def train_svm(X_train, y_train, preprocessing_pipeline,
     trained_clf = best_model.named_steps['clf']
 
     refernce_pipeline = ImbPipeline([
-       ('preprocess', FunctionTransformer(preprocessing_pipeline.fit_transform, validate=False)),
+       ('preprocess', FunctionTransformer(preprocessing_pipeline.transform, validate=False)),
        ("clf", trained_clf) 
     ])
 
