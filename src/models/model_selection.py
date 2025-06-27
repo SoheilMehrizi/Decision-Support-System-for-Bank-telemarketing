@@ -26,7 +26,7 @@ MODEL_REGISTRY: Dict[str, ModelFactory] = {
 }
 
 
-def train_log_models(
+def train_log_compare_models(
     X_train, y_train, X_test, y_test,
     preprocessing_pipeline: object,
     models_name: list=None,
@@ -53,7 +53,7 @@ def train_log_models(
 
     ax_lift=None
     ax_roc=None
-
+    
     if models_name==None:
         models = MODEL_REGISTRY
     else:
