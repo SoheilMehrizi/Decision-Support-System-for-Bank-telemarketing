@@ -10,12 +10,9 @@ def calculate_alift(y_true, y_proba, num_bins=20):
 
     df = pd.DataFrame({'y_true': y_true, 'y_proba': y_proba})
     df = df.sort_values('y_proba', ascending=False)
-    # df['decile'] = pd.qcut(df['y_proba'], q=num_bins, labels=False, duplicates='drop')
     df['decile'] = pd.cut(df['y_proba'], bins=num_bins, labels=False)
     lift_table = df.groupby('decile')['y_true'].mean().reset_index(name='rate')
-
     baseline = df['y_true'].mean()
-
     lift_table['lift'] = lift_table['rate'] / baseline
     max_alift = lift_table['lift'].max()
     
