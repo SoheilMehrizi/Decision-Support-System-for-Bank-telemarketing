@@ -1,0 +1,16 @@
+aliases: []
+creation_timestamp: 1751111733857
+current_stage: None
+description: null
+last_updated_timestamp: 1751111733857
+name: Random_Forest
+run_id: d7e5c6cc7d1f46fba7655b909dd599dd
+run_link: null
+source: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision Support
+  System/Project/notebooks/../src/models/mlruns/636029484244639439/d7e5c6cc7d1f46fba7655b909dd599dd/artifacts/random_forest_model
+status: READY
+status_message: null
+storage_location: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/636029484244639439/d7e5c6cc7d1f46fba7655b909dd599dd/artifacts/random_forest_model
+user_id: null
+version: 2

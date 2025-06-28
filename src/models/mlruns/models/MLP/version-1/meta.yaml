@@ -1,0 +1,16 @@
+aliases: []
+creation_timestamp: 1751097243444
+current_stage: None
+description: null
+last_updated_timestamp: 1751097243444
+name: MLP
+run_id: 99128f771cf440f68842b0d3da0ecf6f
+run_link: null
+source: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision Support
+  System/Project/notebooks/../src/models/mlruns/955962306511703283/99128f771cf440f68842b0d3da0ecf6f/artifacts/MLP
+status: READY
+status_message: null
+storage_location: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/955962306511703283/99128f771cf440f68842b0d3da0ecf6f/artifacts/MLP
+user_id: null
+version: 1

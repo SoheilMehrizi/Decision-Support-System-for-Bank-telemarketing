@@ -1,0 +1,16 @@
+artifact_uri: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/636029484244639439/3b0252d42e0e4f6fa182f01d707cd9c6/artifacts
+end_time: 1751142514110
+entry_point_name: ''
+experiment_id: '636029484244639439'
+lifecycle_stage: active
+run_id: 3b0252d42e0e4f6fa182f01d707cd9c6
+run_name: magnificent-bird-846
+run_uuid: 3b0252d42e0e4f6fa182f01d707cd9c6
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751142501198
+status: 3
+tags: []
+user_id: mehri

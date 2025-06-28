@@ -1,0 +1,16 @@
+aliases: []
+creation_timestamp: 1751142514139
+current_stage: None
+description: null
+last_updated_timestamp: 1751142514139
+name: BankMarketing_SVC
+run_id: 3b0252d42e0e4f6fa182f01d707cd9c6
+run_link: null
+source: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision Support
+  System/Project/notebooks/../src/models/mlruns/636029484244639439/3b0252d42e0e4f6fa182f01d707cd9c6/artifacts/svm_model
+status: READY
+status_message: null
+storage_location: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/636029484244639439/3b0252d42e0e4f6fa182f01d707cd9c6/artifacts/svm_model
+user_id: null
+version: 1

@@ -1,0 +1,16 @@
+artifact_uri: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/636029484244639439/5476a9cfd9b14119804b1d3f38a56e2c/artifacts
+end_time: 1751092803992
+entry_point_name: ''
+experiment_id: '636029484244639439'
+lifecycle_stage: active
+run_id: 5476a9cfd9b14119804b1d3f38a56e2c
+run_name: efficient-horse-36
+run_uuid: 5476a9cfd9b14119804b1d3f38a56e2c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751092767467
+status: 3
+tags: []
+user_id: mehri

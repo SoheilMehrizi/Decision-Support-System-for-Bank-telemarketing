@@ -1,0 +1,16 @@
+artifact_uri: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/955962306511703283/5a1510d254f34c40bb53410bb0e0de75/artifacts
+end_time: 1751112438474
+entry_point_name: ''
+experiment_id: '955962306511703283'
+lifecycle_stage: active
+run_id: 5a1510d254f34c40bb53410bb0e0de75
+run_name: suave-slug-534
+run_uuid: 5a1510d254f34c40bb53410bb0e0de75
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751112421608
+status: 3
+tags: []
+user_id: mehri

@@ -1,0 +1,16 @@
+artifact_uri: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/955962306511703283/adb282cf123d486a8fd1ea59d5669de5/artifacts
+end_time: 1751133746783
+entry_point_name: ''
+experiment_id: '955962306511703283'
+lifecycle_stage: active
+run_id: adb282cf123d486a8fd1ea59d5669de5
+run_name: kindly-swan-60
+run_uuid: adb282cf123d486a8fd1ea59d5669de5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751133729526
+status: 3
+tags: []
+user_id: mehri

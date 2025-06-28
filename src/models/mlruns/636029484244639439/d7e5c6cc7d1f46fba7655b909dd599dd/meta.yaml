@@ -1,0 +1,16 @@
+artifact_uri: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/636029484244639439/d7e5c6cc7d1f46fba7655b909dd599dd/artifacts
+end_time: 1751111733826
+entry_point_name: ''
+experiment_id: '636029484244639439'
+lifecycle_stage: active
+run_id: d7e5c6cc7d1f46fba7655b909dd599dd
+run_name: placid-bug-657
+run_uuid: d7e5c6cc7d1f46fba7655b909dd599dd
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751111723268
+status: 3
+tags: []
+user_id: mehri

@@ -1,0 +1,16 @@
+artifact_uri: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/955962306511703283/99128f771cf440f68842b0d3da0ecf6f/artifacts
+end_time: 1751097243406
+entry_point_name: ''
+experiment_id: '955962306511703283'
+lifecycle_stage: active
+run_id: 99128f771cf440f68842b0d3da0ecf6f
+run_name: flawless-snake-448
+run_uuid: 99128f771cf440f68842b0d3da0ecf6f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751097205929
+status: 3
+tags: []
+user_id: mehri
