@@ -56,6 +56,6 @@ def train_random_forest(X_train, y_train, preprocessing_pipeline,
     
     repo = ModelRepository(experiment_name="Bank_Marketing_Models")
     run_id = repo.log_model(refernce_pipeline, model_name="random_forest_model", params=best_params, metrics=metrics)
-    registered_model = repo.register_model(run_id, model_name="random_forest_model", registered_name="BankMarketing_DT")
+    registered_model = repo.register_model(run_id, model_name="random_forest_model", registered_name="Random_Forest")
 
     return refernce_pipeline, halving_search.best_params_, metrics
