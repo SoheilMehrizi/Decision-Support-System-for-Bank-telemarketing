@@ -71,12 +71,10 @@ def train_mlp(X_train, y_train, preprocessing_pipeline,
     X_tr_prp = preprocessing_pipeline.transform(X_train)
     X_val_prp = preprocessing_pipeline.transform(X_val)
 
-    X_full_prp = preprocessing_pipeline.transform(X)
+    
 
     ros = RandomOverSampler(random_state=random_state)
     X_tr_rsmpld, y_tr_rsmpld = ros.fit_resample(X_tr_prp, y_train)
-
-    X_full_rsmpld, y_full_rsmpld = ros.fit_resample(X_full_prp, y)
 
     stop = callbacks.EarlyStopping(
         monitor='val_auc', patience=mlp_config.get('patience', 10),
@@ -118,6 +116,10 @@ def train_mlp(X_train, y_train, preprocessing_pipeline,
     
     print(5*"*","Retrain the best Estimator on the full training set",5*"*")
     # FINAL TRAINING
+    X_full_prp = preprocessing_pipeline.fit_transform(X)    
+    X_full_rsmpld, y_full_rsmpld = ros.fit_resample(X_full_prp, y)
+
+    
     final_model = build_model(best_hps, input_dim, mlp_config)
     final_model.fit(
         X_full_rsmpld, y_full_rsmpld,

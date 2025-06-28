@@ -25,7 +25,8 @@ def train_logistic_regression(X_train, y_train, preprocessing_pipeline,
     
     
     pipeline = ImbPipeline([
-       ('preprocess', FunctionTransformer(preprocessing_pipeline.fit_transform, validate=False)),
+      #  ('preprocess', FunctionTransformer(preprocessing_pipeline.fit_transform, validate=False)),
+       ('preprocess', preprocessing_pipeline),
        ("smote", RandomOverSampler(random_state=42)),
        ("clf", lr_model) 
     ])
