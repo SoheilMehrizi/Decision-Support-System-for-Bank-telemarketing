@@ -21,10 +21,10 @@ def train_random_forest(X_train, y_train, preprocessing_pipeline,
     cv = StratifiedKFold(n_splits=cv_splits, shuffle=True, random_state=random_state)
     rf_model = RandomForestClassifier(random_state=random_state)
     
-
+    preprocessing_pipeline.fit(X_train, y_train)
 
     pipeline = ImbPipeline([
-       ('preprocess', preprocessing_pipeline),
+       ('preprocess', FunctionTransformer(preprocessing_pipeline.transform, validate=False)),
        ("smote", RandomOverSampler(random_state=42)),
        ("clf", rf_model) 
     ])

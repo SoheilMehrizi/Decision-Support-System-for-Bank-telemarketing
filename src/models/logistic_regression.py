@@ -23,10 +23,10 @@ def train_logistic_regression(X_train, y_train, preprocessing_pipeline,
     
     lr_model = LogisticRegression(max_iter=1000, random_state=random_state)
     
+    preprocessing_pipeline.fit(X_train, y_train)
     
     pipeline = ImbPipeline([
-      #  ('preprocess', FunctionTransformer(preprocessing_pipeline.fit_transform, validate=False)),
-       ('preprocess', preprocessing_pipeline),
+       ('preprocess', FunctionTransformer(preprocessing_pipeline.transform, validate=False)),
        ("smote", RandomOverSampler(random_state=42)),
        ("clf", lr_model) 
     ])
