@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve, roc_auc_score
 from sklearn.model_selection import learning_curve, GridSearchCV, ParameterGrid
-
+from sklearn.pipeline import Pipeline
 from tqdm import tqdm
 
 def calculate_alift(y_true, y_proba, num_bins=20):
@@ -70,3 +70,36 @@ def evaluate_model_on_test(estimator, estimator_name, X_test, y_test, ax_roc=Non
         plot_alift(model_name=estimator_name, lift_table=lift_table,max_alift=max_alift, ax=ax_lift)
 
     return test_auc_val, max_alift
+
+
+
+
+# calculate features' importance from the trained random forest classifier .
+def get_features_importance_df(RFpipeline: Pipeline, original_features_name:list):
+
+
+    features_importance_dict = {key: 0 for key in original_features_name}
+
+    preprocessor = RFpipeline.named_steps['preprocess']
+    RandomForestClassifier = RFpipeline.named_steps['clf']
+    encoded_feature_importance = RandomForestClassifier.feature_importances_
+
+    encoded_feature_names = preprocessor[-1].get_feature_names_out(original_features_name)
+
+
+    for name, importance in zip(encoded_feature_names, encoded_feature_importance):
+        
+        type, feature = name.split('__')
+
+        if type == "num":
+            features_importance_dict[feature] = round(importance, 2)
+        elif type == "cat":
+            cat_feature, _ =feature.split("_")
+            features_importance_dict[cat_feature] += round(importance, 2)
+
+    df_feature_importance = pd.DataFrame({
+        "features": list(features_importance_dict.keys()),
+        "importance": list(features_importance_dict.values())
+    })
+
+    return df_feature_importance
