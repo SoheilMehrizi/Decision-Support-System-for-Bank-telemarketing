@@ -55,57 +55,30 @@ class DataCleaningTransformer(BaseEstimator, TransformerMixin):
     
 
 
-class SeasonalDecompositionOutlierRemover(BaseEstimator, TransformerMixin):
-    """
-    Removes harsh outliers from numeric columns based on seasonal decomposition.
-    For each numeric column, the STL decomposition is used to obtain the residuals.
-    Rows are removed if any residual is outside of [Q1 - factor*IQR, Q3 + factor*IQR],
-    where factor is set high (e.g., 3.0) so that slight anomalies remain.
-    
-    Parameters:
-        numeric_columns (list): List of numeric column names to process. If None,
-                                auto-detects numeric columns.
-        period (int): The seasonal period to use in STL decomposition.
-        factor (float): The multiplier for IQR to define harsh outliers.
-    """
-    def __init__(self, numeric_columns=None, period=12, factor=3.0):
-        self.numeric_columns = numeric_columns
-        self.period = period
-        self.factor = factor
+class BoxplotOutlierRemover(BaseEstimator, TransformerMixin):
+    def __init__(self, numeric_features):
+        self.numeric_features = numeric_features
+        self.whisker_bounds_ = {}
 
     def fit(self, X, y=None):
-        # Determine numeric columns if not provided.
-        if self.numeric_columns is None:
-            self.numeric_columns_ = X.select_dtypes(include=[np.number]).columns.tolist()
-        else:
-            self.numeric_columns_ = self.numeric_columns
-
-        # Compute bounds for each column based on the residuals from STL.
-        self.bounds_ = {}
-        for col in self.numeric_columns_:
-            series = X[col]
-            # Apply STL decomposition; robust=True helps mitigate the effect of extreme outliers
-            stl = STL(series, period=self.period, robust=True)
-            resid = stl.fit().resid
-            # Calculate IQR-based thresholds for residuals
-            Q1 = np.percentile(resid, 5)
-            Q3 = np.percentile(resid, 95)
-            IQR = Q3 - Q1
-            lower_bound = Q1 - self.factor * IQR
-            upper_bound = Q3 + self.factor * IQR
-            self.bounds_[col] = (lower_bound, upper_bound)
+        # Store whisker bounds using IQR method
+        for feature in self.numeric_features:
+            q1 = X[feature].quantile(0.05)
+            q3 = X[feature].quantile(0.95)
+            iqr = q3 - q1
+            lower = q1 - 1.5 * iqr
+            upper = q3 + 1.5 * iqr
+            self.whisker_bounds_[feature] = (lower, upper)
         return self
 
-    def transform(self, X, y=None):
-        X_out = X.copy()
-        mask = np.ones(len(X_out), dtype=bool)
-        # For each numeric column, recompute the residuals and apply the pre-computed thresholds
-        for col in self.numeric_columns_:
-            series = X_out[col]
-            stl = STL(series, period=self.period, robust=True)
-            resid = stl.fit().resid
-            lower_bound, upper_bound = self.bounds_[col]
-            col_mask = (resid >= lower_bound) & (resid <= upper_bound)
-            mask &= col_mask
-        # Return only the rows where all numeric residuals are within acceptable bounds
-        return X_out[mask]
+    def transform(self, X):
+        X_ = X.copy()
+        is_outlier = np.full(X_.shape[0], False)
+
+        for feature in self.numeric_features:
+            lower, upper = self.whisker_bounds_[feature]
+            is_outlier |= (X_[feature] < lower) | (X_[feature] > upper)
+
+        # Return only non-outlier rows, and drop any temp columns
+        X_clean = X_.loc[~is_outlier].copy()
+        return X_clean.reset_index(drop=True)
