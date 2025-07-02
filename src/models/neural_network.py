@@ -97,7 +97,6 @@ def train_mlp(X_train, y_train,
         y = y_train['y'].map({'yes': 1, 'no': 0})
     
     X = X_train
-    y = y_train['y']
 
     X_train, X_val, y_train, y_val = train_test_split(
         X, y,
