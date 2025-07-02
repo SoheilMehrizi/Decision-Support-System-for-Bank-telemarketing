@@ -1,0 +1,16 @@
+artifact_uri: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/636029484244639439/9250c0ff423a4e3d935536af9f5b4211/artifacts
+end_time: 1751376402866
+entry_point_name: ''
+experiment_id: '636029484244639439'
+lifecycle_stage: active
+run_id: 9250c0ff423a4e3d935536af9f5b4211
+run_name: omniscient-carp-895
+run_uuid: 9250c0ff423a4e3d935536af9f5b4211
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751376381488
+status: 3
+tags: []
+user_id: mehri
