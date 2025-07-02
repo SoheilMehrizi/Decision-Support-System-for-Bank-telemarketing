@@ -25,10 +25,10 @@ MODEL_REGISTRY: Dict[str, ModelFactory] = {
     "NeuralNetwork":     train_mlp,
 }
 
-
+#TODO: Update the data preprocessing pipeline in order to prevent information leackage.
 def train_log_compare_models(
     X_train, y_train, X_test, y_test,
-    preprocessing_pipeline: object,
+    num_columns, cat_columns,
     models_name: list=None,
     visualize: bool = True
 ) -> Dict[str, Any]:
@@ -49,6 +49,7 @@ def train_log_compare_models(
     results : dict
         For each model name: {"model", "params", "auc_train", "auc_test", "alift"}.
     """
+    #TODO: Update the data preprocessing pipeline in order to prevent information leackage.
     results: Dict[str, Any] = {}
 
     ax_lift=None
@@ -66,7 +67,10 @@ def train_log_compare_models(
     
     for idx, (name, trainer) in enumerate(tqdm(models.items(), desc="Models", unit="model")):
         logging.info(f"Training {name} ({idx+1}/{models_num})…")
-        best_estimator_reference_pipeline, best_params, auc_train = trainer(X_train, y_train, preprocessing_pipeline)
+        best_estimator_reference_pipeline, best_params, auc_train = trainer(X_train=X_train,
+                                                                             y_train=y_train,
+                                                                            num_columns=num_columns,
+                                                                             cat_columns=cat_columns)
 
         logging.info(f"Evaluating {name} on test set…")
         

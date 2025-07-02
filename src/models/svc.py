@@ -9,9 +9,54 @@ from configs.config_repository import ConfigRepository
 from src.models.model_repository import ModelRepository
 from sklearn.preprocessing import FunctionTransformer
 
-def train_svc(X_train, y_train, preprocessing_pipeline,
+from src.data_preprocessing import create_preprocessor
+
+def train_svc(X_train, y_train, 
+              num_columns, cat_columns,
                cv_splits=5, random_state=42):
 
+   """
+    Train a Support Vector Classifier (SVC) model using randomized hyperparameter search with 
+    halving search CV, while applying preprocessing and class balancing within a scikit-learn pipeline.
+
+    This function constructs a machine learning pipeline that includes:
+    - Preprocessing of numeric and categorical features via `create_preprocessor`.
+    - Oversampling of the minority class using `RandomOverSampler`.
+    - Hyperparameter tuning using `HalvingRandomSearchCV`.
+    - Model logging and registration for reproducibility and versioning.
+
+    Parameters
+    ----------
+    X_train : pd.DataFrame
+        Training features. Should include both numeric and categorical columns.
+    
+    y_train : pd.Series
+        Training target labels (binary classification).
+    
+    num_columns : list of str
+        List of column names in `X_train` representing numerical features.
+    
+    cat_columns : list of str
+        List of column names in `X_train` representing categorical features.
+    
+    cv_splits : int, default=5
+        Number of folds for stratified cross-validation during hyperparameter search.
+    
+    random_state : int, default=42
+        Random seed for reproducibility in cross-validation, model, and resampling.
+
+    Returns
+    -------
+    refernce_pipeline : ImbPipeline
+        A fitted pipeline including preprocessing and the best SVC model, ready for prediction or deployment.
+    
+    best_params : dict
+        The best hyperparameter configuration found during the search.
+    
+    metrics : dict
+        Dictionary containing evaluation metrics (e.g., cross-validated ROC AUC).
+   """
+   
    config_repo = ConfigRepository(config_path="../configs/models_config.json")
    param_dist = config_repo.get_config("svc")
 
@@ -19,10 +64,11 @@ def train_svc(X_train, y_train, preprocessing_pipeline,
 
    svc_model = SVC(probability=True, random_state=random_state)
 
-   preprocessing_pipeline.fit(X_train, y_train)
+   preprocessing_pipeline = create_preprocessor(num_features=num_columns,
+                                                 cat_features=cat_columns)
 
    pipeline = ImbPipeline([
-      ('preprocess', FunctionTransformer(preprocessing_pipeline.transform, validate=False)),
+      ('preprocess', preprocessing_pipeline),
       ("smote", RandomOverSampler(random_state=42)),
       ("clf", svc_model) 
    ])
@@ -46,9 +92,10 @@ def train_svc(X_train, y_train, preprocessing_pipeline,
    metrics = {"cv_roc_auc": halving_search.best_score_}
     
    trained_clf = best_model.named_steps['clf']
-
+   fitted_preprocessor = best_model.named_steps['preprocess']
+   
    refernce_pipeline = ImbPipeline([
-      ('preprocess', FunctionTransformer(preprocessing_pipeline.transform, validate=False)),
+      ('preprocess', fitted_preprocessor),
       ("clf", trained_clf) 
    ])
 
