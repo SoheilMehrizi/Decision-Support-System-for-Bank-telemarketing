@@ -84,7 +84,7 @@ def get_features_importance_df(RFpipeline: Pipeline, original_features_name:list
     RandomForestClassifier = RFpipeline.named_steps['clf']
     encoded_feature_importance = RandomForestClassifier.feature_importances_
 
-    encoded_feature_names = preprocessor[-1].get_feature_names_out(original_features_name)
+    encoded_feature_names = preprocessor.get_feature_names_out(original_features_name)
 
 
     for name, importance in zip(encoded_feature_names, encoded_feature_importance):
