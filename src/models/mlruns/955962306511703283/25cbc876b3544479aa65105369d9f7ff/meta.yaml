@@ -1,0 +1,16 @@
+artifact_uri: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/955962306511703283/25cbc876b3544479aa65105369d9f7ff/artifacts
+end_time: 1751458220787
+entry_point_name: ''
+experiment_id: '955962306511703283'
+lifecycle_stage: active
+run_id: 25cbc876b3544479aa65105369d9f7ff
+run_name: nebulous-bat-510
+run_uuid: 25cbc876b3544479aa65105369d9f7ff
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751458198926
+status: 3
+tags: []
+user_id: mehri

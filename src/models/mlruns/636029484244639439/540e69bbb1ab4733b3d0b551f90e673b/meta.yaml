@@ -1,0 +1,16 @@
+artifact_uri: file:///h:/Resume/Projects/DataScience/Banking Telemarketing Decision
+  Support System/Project/notebooks/../src/models/mlruns/636029484244639439/540e69bbb1ab4733b3d0b551f90e673b/artifacts
+end_time: 1751457478703
+entry_point_name: ''
+experiment_id: '636029484244639439'
+lifecycle_stage: active
+run_id: 540e69bbb1ab4733b3d0b551f90e673b
+run_name: blushing-rook-37
+run_uuid: 540e69bbb1ab4733b3d0b551f90e673b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751457447359
+status: 3
+tags: []
+user_id: mehri
