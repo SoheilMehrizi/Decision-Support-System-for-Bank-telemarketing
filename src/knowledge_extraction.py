@@ -85,7 +85,7 @@ def extract_surrogate_rules(pipeline, X: pd.DataFrame, y_pred_pipeline: np.ndarr
 
 
 
-def extract_local_rules(pipeline, X: pd.DataFrame, y_pred_pipeline: np.ndarray, 
+def extract_local_rules(pipeline, X: pd.DataFrame, y_pred_pipeline: np.ndarray,
                         input_conditions: dict, feature_names: list, max_depth: int = 3) -> pd.DataFrame:
     """
     Extract local surrogate rules based on specific input feature conditions.
