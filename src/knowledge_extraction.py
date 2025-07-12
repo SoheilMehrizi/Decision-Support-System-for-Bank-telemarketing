@@ -70,7 +70,7 @@ def extract_surrogate_rules(pipeline, X: pd.DataFrame, y_pred_pipeline: np.ndarr
             value = tree.value[node][0]
             predicted_class = np.argmax(value)
             confidence = value[predicted_class] / np.sum(value)
-            support = samples / X.shape[0]
+            support = samples
             rule = "IF " + " AND ".join(rule_conditions) + f" THEN class={predicted_class}"
             rules.append({
                 "rule": rule,
@@ -81,3 +81,44 @@ def extract_surrogate_rules(pipeline, X: pd.DataFrame, y_pred_pipeline: np.ndarr
     recurse(0, [])
 
     return pd.DataFrame(rules)
+
+
+
+
+def extract_local_rules(pipeline, X: pd.DataFrame, y_pred_pipeline: np.ndarray, 
+                        input_conditions: dict, feature_names: list, max_depth: int = 3) -> pd.DataFrame:
+    """
+    Extract local surrogate rules based on specific input feature conditions.
+
+    Args:
+        pipeline: trained sklearn pipeline with preprocessor and classifier.
+        X: original dataset (before preprocessing).
+        y_pred_pipeline: predictions from the pipeline.
+        input_conditions: dict of known feature values (e.g., {'a': 1, 'b': 2}).
+        feature_names: original feature names.
+        max_depth: depth of the surrogate tree.
+
+    Returns:
+        DataFrame with human-readable rules for the local subset.
+    """
+    # Step 1: Filter dataset based on known feature values
+    mask = pd.Series(True, index=X.index)
+    for feat, val in input_conditions.items():
+        mask &= (X[feat] == val)
+    X_local = X[mask]
+    
+    if X_local.empty:
+        raise ValueError("No rows match the given input conditions.")
+
+    y_local = y_pred_pipeline[mask]
+
+    # Step 2: Extract rules on the local dataset
+    rules_df = extract_surrogate_rules(
+        pipeline=pipeline,
+        X=X_local,
+        y_pred_pipeline=y_local,
+        feature_names=feature_names,
+        max_depth=max_depth
+    )
+
+    return rules_df
