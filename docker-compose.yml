@@ -1,0 +1,39 @@
+
+version: '3.8'
+
+services:
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: deployment/Dockerfile
+    container_name: fastapi
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://postgres:password@db:5432/mydb
+
+    restart: unless-stopped
+
+
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    
+    
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+
+

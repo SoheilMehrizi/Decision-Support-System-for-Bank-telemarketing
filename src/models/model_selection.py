@@ -25,7 +25,7 @@ MODEL_REGISTRY: Dict[str, ModelFactory] = {
     "NeuralNetwork":     train_mlp,
 }
 
-#TODO: Update the data preprocessing pipeline in order to prevent information leackage.
+
 def train_log_compare_models(
     X_train, y_train, X_test, y_test,
     num_columns, cat_columns,
@@ -49,7 +49,7 @@ def train_log_compare_models(
     results : dict
         For each model name: {"model", "params", "auc_train", "auc_test", "alift"}.
     """
-    #TODO: Update the data preprocessing pipeline in order to prevent information leackage.
+
     results: Dict[str, Any] = {}
 
     ax_lift=None
