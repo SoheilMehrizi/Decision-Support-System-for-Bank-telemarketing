@@ -4,6 +4,9 @@ from database import Base, engine, get_db
 from repositories.bank_data_repository import BankDataRepository
 from schemas.bank_data import BankDataCreate, BankData
 from routers import auth
+
+from models.users import  User
+
 app = FastAPI()
 
 # # Create database tables

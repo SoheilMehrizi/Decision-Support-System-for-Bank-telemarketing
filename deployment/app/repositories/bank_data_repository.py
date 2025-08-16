@@ -6,7 +6,7 @@ from sqlalchemy.exc import SQLAlchemyError
 import logging
 
 from models.bank_data import BankData
-from deployment.app.schemas.bank_data import BankDataCreate, BankData as BankDataSchema
+from schemas.bank_data import BankDataCreate, BankData as BankDataSchema
 
 logger = logging.getLogger(__name__)
 

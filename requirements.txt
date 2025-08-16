@@ -1,26 +1,51 @@
+# -------------------------
+# Core scientific stack
+# -------------------------
 numpy==2.1.1
- pandas==2.2.3
-
-scikit-learn==1.5.2
-scikit-optimize==0.10.2
-
+pandas==2.2.3
 scipy==1.14.1
 
+# -------------------------
+# Machine learning & optimization
+# -------------------------
+imbalanced-learn
 mlflow==2.21.3
-
-seaborn
-matplotlib
-
+scikit-learn==1.5.2
+scikit-optimize==0.10.2
 tensorflow
 
-tqdm==4.67.0
-imbalanced-learn
+# -------------------------
+# Visualization
+# -------------------------
+matplotlib
+seaborn
 
+# -------------------------
+# Utilities
+# -------------------------
+tqdm==4.67.0
+
+# -------------------------
+# Web / API framework
+# -------------------------
 fastapi==0.112.2
 uvicorn==0.30.6
-sqlalchemy==2.0.31
+
+# -------------------------
+# Database
+# -------------------------
 psycopg2-binary==2.9.9
+sqlalchemy==2.0.31
+
+# -------------------------
+# Environment & config
+# -------------------------
 python-dotenv==1.0.1
 
-python-jose[cryptography]
+# -------------------------
+# Security & Auth
+# -------------------------
 passlib[bcrypt]
+pydantic[email]
+python-jose[cryptography]
+python-multipart
