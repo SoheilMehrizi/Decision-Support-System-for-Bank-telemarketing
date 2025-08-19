@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, Float, CheckConstraint
-from sqlalchemy.ext.declarative import declarative_base
+from database import Base
 
-Base = declarative_base()
 
 class BankData(Base):
     __tablename__ = "bank_data"

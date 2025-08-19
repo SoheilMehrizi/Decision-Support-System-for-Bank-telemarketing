@@ -3,13 +3,13 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from database import get_db
 from repositories.users import UserRepository
-from dependencies.auth import get_current_superuser
+from dependencies.auth import get_current_superuser, get_current_user
 from utils.jwt import create_access_token
 from schemas.users import Token
 
-router = APIRouter()
+router = APIRouter(prefix="/auth", tags=["auth"])
 
-@router.post("/token", response_model=Token, tags=["auth"])
+@router.post("/token", response_model=Token)
 def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db),
@@ -25,7 +25,8 @@ def login_for_access_token(
     access_token = create_access_token(data={"sub": user.username})
     return {"access_token": access_token, "token_type": "bearer"}
 
-
-@router.get("/protected-route", tags=["auth"])
-def protected_route(current_user=Depends(get_current_superuser)):
+@router.get("/protected-route")
+def protected_route(current_user = Depends(get_current_superuser)):
     return {"msg": f"Hello, superuser {current_user.username}!"}
+
+
