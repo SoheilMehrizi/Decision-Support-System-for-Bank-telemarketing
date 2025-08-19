@@ -6,8 +6,7 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from database import get_db
 
-from utils.token_verification import get_current_user
-
+from dependencies.auth import get_current_superuser
 
 router = APIRouter()
 

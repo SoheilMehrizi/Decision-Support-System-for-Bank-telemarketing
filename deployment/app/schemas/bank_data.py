@@ -20,7 +20,6 @@ class BankDataCreate(BaseModel):
     previous: int
     poutcome: str
     y: str #TODO: refactor
-    index: int
     training_data: bool
 
 
@@ -44,7 +43,6 @@ class BankData(BaseModel):
     previous: int
     poutcome: str
     y: str #TODO: refactor
-    index: int
     training_data: bool
 
     class Config:
