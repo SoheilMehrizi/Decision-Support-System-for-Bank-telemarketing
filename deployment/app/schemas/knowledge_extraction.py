@@ -11,3 +11,11 @@ class KnowledgeExtractionRequest(BaseModel):
     housing: Optional[str] = None   # TODO: refactor
     loan: Optional[str] = None
     month: Optional[str] = None
+    
+    
+    
+class KnowledgeExtractionResponse(BaseModel):
+    status: str
+    step: Optional[str] = None
+    message: Optional[str] = None
+    rules: Optional[List[Dict[str, Any]]] = None

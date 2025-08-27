@@ -1,9 +1,9 @@
+from deployment.app.routers import knowledge_extraction
 from fastapi import FastAPI
 from database import Base, engine
 from routers import (
                      auth,bank_data,
                      model_train, 
-                     general_knowledge_extraction,
                      prediction)
 
 from fastapi.openapi.utils import get_openapi
@@ -20,7 +20,7 @@ Base.metadata.create_all(bind=engine)
 # Include routers
 app.include_router(auth.router)
 app.include_router(bank_data.router)
-app.include_router(general_knowledge_extraction.router)
+app.include_router(knowledge_extraction.router)
 app.include_router(model_train.router)
 app.include_router(prediction.router)
 
