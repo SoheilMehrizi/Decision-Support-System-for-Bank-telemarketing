@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from database import Base, engine
 from routers import (
-                     auth,bank_data, 
+                     auth,bank_data,
+                     model_train, 
                      general_knowledge_extraction,
-                     model, prediction)
+                     prediction)
 
 from fastapi.openapi.utils import get_openapi
 
@@ -20,7 +21,7 @@ Base.metadata.create_all(bind=engine)
 app.include_router(auth.router)
 app.include_router(bank_data.router)
 app.include_router(general_knowledge_extraction.router)
-app.include_router(model.router)
+app.include_router(model_train.router)
 app.include_router(prediction.router)
 
 # Custom OpenAPI schema to support Bearer token in Swagger
