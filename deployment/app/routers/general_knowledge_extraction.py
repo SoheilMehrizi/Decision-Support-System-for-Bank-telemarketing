@@ -1,6 +1,6 @@
 
 
-from utils.token_verification import get_current_user
+from dependencies.auth import get_current_user
 from fastapi import APIRouter, Depends, status
 
 from sqlalchemy.orm import Session
@@ -8,7 +8,7 @@ from database import get_db
 
 from dependencies.auth import get_current_superuser
 
-router = APIRouter()
+router = APIRouter(prefix="/ML", tags=["ML"])
 
 def train_model():
     # This simulates your model training cycle
